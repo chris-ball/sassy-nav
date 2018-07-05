@@ -1,0 +1,44 @@
+@mixin navbar__toggle-icon($ns, $toggleSettings) {
+	//  Global
+	$orientation:  map-get($toggleSettings, orientation);
+	//  Button element
+	$__buttonSize: map-get($toggleSettings, size);
+	$buttonSize: if(type-of($__buttonSize) == map, map-get($__buttonSize, $orientation), $__buttonSize);
+	//  Icon items
+	$__itemSize: map-get($toggleSettings, itemSize);
+	$itemSize: if(type-of($__itemSize) == map, map-get($__itemSize, $orientation), $__itemSize);
+	$itemColour: map-get($toggleSettings, foreground);
+	$sizeType: type-of($itemSize);
+
+
+	.#{$ns+__toggle-item} {
+		background-color: if($itemColour, $itemColour, currentColor);
+		border-radius: map-get($toggleSettings, itemRound);
+		display: block;
+		height: if($sizeType == map, map-get($itemSize, height), $itemSize);
+		position: absolute;
+		top: 50%;
+		transform-duration: map-get($toggleSettings, activeTiming);
+		transform-origin: center;
+		width: if($sizeType == map, map-get($itemSize, width), $itemSize);
+		// Index-based item transforms
+		@for $i from 0 to map-get($toggleSettings, itemCount) {
+			$itemTransform: transformWithin(
+				map-get($toggleSettings, itemCount),
+				$itemSize,
+				map-get($toggleSettings, itemGap),
+				$i);
+			@include burger-item-transforms-default($itemTransform, $i);
+			@include burger-item-transforms-active($toggleSettings, $i, $ns);
+		}
+	}
+}
+
+//----------------------------------------------------
+//  Burger layer transforms for default state
+//----------------------------------------------------
+@mixin burger-item-transforms-default($itemTransform, $i) {
+	&:nth-child(#{$i + 1}) {
+		transform: translateY($itemTransform);
+	}
+}

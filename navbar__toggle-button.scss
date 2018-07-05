@@ -1,0 +1,26 @@
+@mixin navbar__toggle-button( $ns, $toggleSettings ) {
+
+	$breakpoint:   map-get($toggleSettings, hide);
+	$buttonSize:   map-get($toggleSettings, size);
+	$buttonColour: map-get($toggleSettings, background);
+
+	.#{$ns+__toggle-button} {
+		background: if($buttonColour, $buttonColour, currentColor);
+		border-radius: map-get($toggleSettings, round);
+		cursor: pointer;
+		display: block;
+		height: if(type-of($buttonSize) == map,
+				   map-get($buttonSize, height),
+				   $buttonSize);
+		margin-left: auto;
+		position: relative;
+		width: if(type-of($buttonSize) == map,
+				  map-get($buttonSize, width),
+				  $buttonSize);
+		@if $breakpoint {
+			@media screen and (min-width: $breakpoint){
+				display: none;
+			}
+		}
+	}
+}

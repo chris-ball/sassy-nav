@@ -1,0 +1,16 @@
+// $container: Size of parent element
+// $itemCount: Number of children
+// $itemSize:  Size along the alignment axis
+// $gapSize:   Space between the items
+// $iteration: Item being positioned
+@function spaceWithin($container, $itemCount, $itemSize, $gapSize, $iteration) {
+	$layerAndGap: $itemSize + $gapSize;
+	$itemStack: ($itemCount - 1) * $layerAndGap;
+	$offset: (0.5 * ($container - $itemStack)) + ($iteration * $layerAndGap);
+	@return $offset;
+}
+
+@function transformWithin($count, $itemSize, $gapSize, $i){
+	$halfSize: ($gapSize + $itemSize) * ($count - 1) / 2;
+	@return $halfSize - ($i * ($itemSize + $gapSize));
+}

@@ -1,0 +1,6 @@
+@mixin navbar__item ($ns, $padding, $margin) {
+	.#{$ns+__item} {
+		padding: $padding;
+		margin: $margin;
+	}
+}

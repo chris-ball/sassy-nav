@@ -1,0 +1,26 @@
+@mixin navbar__lists ( $ns, $startnav, $midnav, $endnav ) {
+	// Common properties
+	%list {
+		display: flex;
+		list-style: none;
+		flex-direction: row;
+	}
+
+	@if $startnav {
+		.#{$ns+__start} {
+			@extend %list;
+		}
+	}
+
+	@if $midnav {
+		.#{$ns+__middle} {
+			@extend %list;
+		}
+	}
+
+	@if $endnav {
+		.#{$ns+__end} {
+			@extend %list;
+		}
+	}
+}

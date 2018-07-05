@@ -1,0 +1,6 @@
+@mixin navbar__link ($ns, $padding, $margin) {
+	.#{$ns+__link} {
+		padding: $padding;
+		margin: $margin;
+	}
+}
