@@ -1,0 +1,101 @@
+@import 'utils';
+@import 'navbar__toggle';
+@import 'navbar__toggle-button';
+@import 'navbar__toggle-icon';
+@import 'navbar__burger-active';
+@import 'navbar__list';
+@import 'navbar__item';
+@import 'navbar__link';
+
+
+@mixin navbar($settings) {
+	$defaults: (
+		brand: true,
+		showToggle: true,
+		namespace: 'navbar'
+	);
+	$settings: map-merge($defaults, $settings);
+	$ns: map-get($settings, namespace);
+
+	//----------------------------------------------------
+	//  Main navbar element
+	//----------------------------------------------------
+	.#{$ns} {
+		min-height: map-get($settings, height);
+		position: relative;
+	}
+
+	//----------------------------------------------------
+	//  Brand
+	//----------------------------------------------------
+	@if map-get($settings, brand) {
+		.#{$ns+__brand} {
+		}
+	}
+
+	//----------------------------------------------------
+	//  Mobile toggle button
+	//----------------------------------------------------
+	@if map-get( $settings, showToggle ) {
+		@include navbar__toggle(
+			$ns,
+			map-get($settings, toggleSettings)
+		);
+	}
+
+	//----------------------------------------------------
+	//  List containers for the groups of items
+	//----------------------------------------------------
+	@include navbar__lists(
+		$ns,
+		map-get( $settings, startnav ),
+		map-get( $settings, midnav ),
+		map-get( $settings, endnav )
+	);
+
+	//----------------------------------------------------
+	//  List items
+	//----------------------------------------------------
+	@include navbar__item(
+		$ns,	
+		map-get( $settings, itempadding ),
+		map-get( $settings, itemmargin )
+	);
+
+	//----------------------------------------------------
+	//  Links
+	//----------------------------------------------------
+	@include navbar__link(
+		$ns,
+		map-get( $settings, linkpadding ),
+		map-get( $settings, linkmargin )
+	);
+}
+
+$settings: (
+	background: red,
+	color: white,
+	height: 40px,
+	linkpadding: 10px, linkmargin: 10px,
+	itempadding: 10px, itemmargin: 10px,
+	showToggle: true,
+	toggleSettings: (
+		background: currentColor,
+		foreground: #000,
+		size: (height: 40px, width: 40px),
+		round: 50%,
+		hide: 600px,
+		orientation: height,
+		itemCount: 4,
+		itemSize: (height: 1px, width: 20px),
+		itemGap: 3px,
+		itemRound: 1px,
+		itemWidth: 20px,
+		activeType: single,
+		activeTiming: 300ms
+	),
+	endnav: true,
+	startnav: true
+);
+
+@include navbar($settings);
