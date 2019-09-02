@@ -1,4 +1,4 @@
-@mixin navbar__lists ( $ns, $startnav, $midnav, $endnav ) {
+@mixin navbar__lists($classes, $startnav, $midnav, $endnav) {
 	// Common properties
 	%list {
 		display: flex;
@@ -7,19 +7,19 @@
 	}
 
 	@if $startnav {
-		.#{$ns+__start} {
+		.#{ map-get($classes, namespace) + map-get($classes, start) } {
 			@extend %list;
 		}
 	}
 
 	@if $midnav {
-		.#{$ns+__middle} {
+		.#{ map-get($classes, namespace) + map-get($classes, middle) } {
 			@extend %list;
 		}
 	}
 
 	@if $endnav {
-		.#{$ns+__end} {
+		.#{ map-get($classes, namespace) + map-get($classes, end) } {
 			@extend %list;
 		}
 	}

@@ -1,4 +1,8 @@
-@mixin navbar__toggle-icon($ns, $toggleSettings) {
+@mixin navbar__toggle-icon($classes, $toggleSettings, $settings) {
+
+	//----------------------------------------------------
+	//  Variables
+	//----------------------------------------------------
 	//  Global
 	$orientation:  map-get($toggleSettings, orientation);
 	//  Button element
@@ -6,39 +10,57 @@
 	$buttonSize: if(type-of($__buttonSize) == map, map-get($__buttonSize, $orientation), $__buttonSize);
 	//  Icon items
 	$__itemSize: map-get($toggleSettings, itemSize);
+	$iSize: map-get($toggleSettings, itemSize);
 	$itemSize: if(type-of($__itemSize) == map, map-get($__itemSize, $orientation), $__itemSize);
 	$itemColour: map-get($toggleSettings, foreground);
 	$sizeType: type-of($itemSize);
 
-
-	.#{$ns+__toggle-item} {
+	//----------------------------------------------------
+	//  Start building
+	//----------------------------------------------------
+	.#{map-get($classes, namespace) + map-get($classes, toggleIcon)} {
 		background-color: if($itemColour, $itemColour, currentColor);
 		border-radius: map-get($toggleSettings, itemRound);
 		display: block;
-		height: if($sizeType == map, map-get($itemSize, height), $itemSize);
+		height: getSize($iSize, height);
 		position: absolute;
 		top: 50%;
-		transform-duration: map-get($toggleSettings, activeTiming);
 		transform-origin: center;
-		width: if($sizeType == map, map-get($itemSize, width), $itemSize);
-		// Index-based item transforms
-		@for $i from 0 to map-get($toggleSettings, itemCount) {
-			$itemTransform: transformWithin(
-				map-get($toggleSettings, itemCount),
-				$itemSize,
-				map-get($toggleSettings, itemGap),
-				$i);
-			@include burger-item-transforms-default($itemTransform, $i);
-			@include burger-item-transforms-active($toggleSettings, $i, $ns);
+		width: getSize($iSize, width);
+		//----------------------------------------------------
+		//  Transition settings
+		//----------------------------------------------------
+		@if map-get($toggleSettings, activeType) == 'single' {
+			transform-duration: map-get($toggleSettings, activeTiming);
+		}
+		@if map-get($toggleSettings, activeType) == 'cross' {
+			@include toggle-icon-active-cross($toggleSettings, $classes);
 		}
 	}
 }
 
 //----------------------------------------------------
-//  Burger layer transforms for default state
+//  Toggle layer transforms for default state
 //----------------------------------------------------
-@mixin burger-item-transforms-default($itemTransform, $i) {
-	&:nth-child(#{$i + 1}) {
-		transform: translateY($itemTransform);
+@mixin toggle-item-transforms-default($toggleSettings, $itemTransform, $i) {
+	// First item rotated 45 degrees
+	@if $i == 0 {
+		&:nth-child(#{$i + 1}) {
+			transform: translateY($itemTransform);
+			transition: transform map-get($toggleSettings, activeTiming);
+		}
+	}
+	// Last item rotated minus 45 degrees
+	// @else if $i == (map-get($toggleSettings, itemCount) - 1) {
+	// 	.#{$ns+__toggle}.is-active &:nth-child( #{$i + 1} ) {
+	// 		transform: translate(0) rotate(-45deg);
+	// 	}
+	// }
+	// Fade out the remaining items
+	@else {
+		&:nth-child(#{$i + 1}) {
+			transform: translateY($itemTransform);
+			transition: transform map-get($toggleSettings, activeTiming);
+		}
 	}
 }

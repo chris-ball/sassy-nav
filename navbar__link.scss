@@ -1,5 +1,5 @@
-@mixin navbar__link ($ns, $padding, $margin) {
-	.#{$ns+__link} {
+@mixin navbar__link($classes, $padding, $margin) {
+	.#{map-get($classes, namespace)+__link} {
 		padding: $padding;
 		margin: $margin;
 	}

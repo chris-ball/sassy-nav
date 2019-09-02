@@ -1,0 +1,85 @@
+@import 'utils';
+@import 'navbar__toggle';
+@import 'navbar__toggle-button';
+@import 'navbar__toggle-icon';
+@import 'navbar__toggle-icon--active-cross';
+@import 'navbar__toggle-icon--active';
+@import 'navbar__list';
+@import 'navbar__item';
+@import 'navbar__link';
+
+@mixin navbar($settings) {
+	$defaults: (
+		brand: true,
+		showToggle: true,
+		classes: (
+			namespace: 'navbar',
+			brand: '__brand',
+			toggleButton: '__toggle-button',
+			toggleIcon: '__toggle-icon',
+			toggleActive: '.is-active',
+			start: '__start',
+			middle: '__middle',
+			end: '__end',
+			list: '__list',
+			link: '__link'
+		)
+	);
+	$settings: map-merge($defaults, $settings);
+	$classes: map-get($settings, classes);
+
+	//----------------------------------------------------
+	//  Main navbar element
+	//----------------------------------------------------
+	.#{ map-get($classes, namespace) } {
+		min-height: map-get($settings, height);
+		position: relative;
+	}
+
+	//----------------------------------------------------
+	//  Brand
+	//----------------------------------------------------
+	@if map-get($settings, brand) {
+		.#{ map-get($classes, namespace) + map-get($classes, brand) } {
+		}
+	}
+
+	//----------------------------------------------------
+	//  Mobile toggle button
+	//----------------------------------------------------
+	@if map-get($settings, toggle) {
+		@include navbar__toggle(
+			$classes,
+			map-get($settings, toggle),
+			$settings
+		);
+	}
+
+	//----------------------------------------------------
+	//  List containers for the groups of items
+	//----------------------------------------------------
+	@include navbar__lists(
+		$classes,
+		map-get($settings, startnav),
+		map-get($settings, midnav),
+		map-get($settings, endnav)
+	);
+
+	//----------------------------------------------------
+	//  List items
+	//----------------------------------------------------
+	@include navbar__item(
+		$classes,	
+		map-get($settings, itempadding),
+		map-get($settings, itemmargin)
+	);
+
+	//----------------------------------------------------
+	//  Links
+	//----------------------------------------------------
+	@include navbar__link(
+		$classes,
+		map-get($settings, linkpadding),
+		map-get($settings, linkmargin)
+	);
+}

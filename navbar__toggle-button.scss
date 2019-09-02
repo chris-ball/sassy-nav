@@ -1,22 +1,18 @@
-@mixin navbar__toggle-button( $ns, $toggleSettings ) {
+@mixin navbar__toggle-button($classes, $toggleSettings, $settings) {
 
 	$breakpoint:   map-get($toggleSettings, hide);
 	$buttonSize:   map-get($toggleSettings, size);
 	$buttonColour: map-get($toggleSettings, background);
 
-	.#{$ns+__toggle-button} {
+	.#{ map-get($classes, namespace) + map-get($classes, toggleButton) } {
 		background: if($buttonColour, $buttonColour, currentColor);
 		border-radius: map-get($toggleSettings, round);
 		cursor: pointer;
 		display: block;
-		height: if(type-of($buttonSize) == map,
-				   map-get($buttonSize, height),
-				   $buttonSize);
+		height: getSize($buttonSize, height);
 		margin-left: auto;
 		position: relative;
-		width: if(type-of($buttonSize) == map,
-				  map-get($buttonSize, width),
-				  $buttonSize);
+		width: getSize($buttonSize, width);
 		@if $breakpoint {
 			@media screen and (min-width: $breakpoint){
 				display: none;

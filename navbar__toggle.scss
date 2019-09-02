@@ -1,13 +1,13 @@
-@mixin navbar__toggle($ns, $toggleSettings) {
+@mixin navbar__toggle($classes, $toggleSettings, $settings) {
 	$toggleType: map-get($toggleSettings, type);
 
 	//----------------------------------------------------
 	//  Toggle button element
 	//----------------------------------------------------
-	@include navbar__toggle-button($ns, $toggleSettings);
+	@include navbar__toggle-button($classes, $toggleSettings, $settings);
 
 	//----------------------------------------------------
 	//  Toggle button icon(s)
 	//----------------------------------------------------
-	@include navbar__toggle-icon($ns, $toggleSettings);
+	@include navbar__toggle-icon($classes, $toggleSettings, $settings);
 }

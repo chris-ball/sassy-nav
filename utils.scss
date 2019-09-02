@@ -11,6 +11,14 @@
 }
 
 @function transformWithin($count, $itemSize, $gapSize, $i){
-	$halfSize: ($gapSize + $itemSize) * ($count - 1) / 2;
+	$halfSize: ($itemSize + $gapSize) * ($count - 1) / 2;
 	@return $halfSize - ($i * ($itemSize + $gapSize));
+}
+
+@function getSize($size, $orientation){
+	@if type-of($size) == map {
+		@return map-get($size, $orientation);
+	} @else {
+		@return $size;
+	}
 }
