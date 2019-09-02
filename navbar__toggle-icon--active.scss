@@ -1,0 +1,47 @@
+//----------------------------------------------------
+//  Toggle item transforms for active state
+//----------------------------------------------------
+@mixin toggle-item-transforms-active($toggleSettings, $i, $classes) {
+	@if map-get($toggleSettings, activeType) == single {
+		@include toggle-active-single($classes, $i); // (1)
+	}
+	@if map-get($toggleSettings, activeType) == cross {
+		@include toggle-active-cross($toggleSettings, $i, $classes); // (2)
+	}
+}
+
+//----------------------------------------------------
+//  (1)
+//  Single active toggle icon
+//----------------------------------------------------
+@mixin toggle-active-single($classes, $i) {
+	.#{ map-get($classes, namespace) + map-get($classes, toggleButton) }.is-active &:nth-child( #{$i + 1} ) {
+		transform: translate(0);
+	}
+}
+
+//----------------------------------------------------
+//  (2)
+//  Cross-shaped active toggle icon
+//----------------------------------------------------
+@mixin toggle-active-cross($toggleSettings, $i, $classes) {
+	@if $i == 0 {
+		// First item rotated 45 degrees
+		.#{ map-get($classes, namespace) + map-get($classes, toggleButton) }.is-active &:nth-child( #{$i + 1} ) {
+			transform: translate(0) rotate(45deg);
+		}
+	}
+	@else if $i == (map-get($toggleSettings, itemCount) - 1) {
+		// Last item rotated minus 45 degrees
+		.#{ map-get($classes, namespace) + map-get($classes, toggleButton) }.is-active &:nth-child( #{$i + 1} ) {
+			transform: translate(0) rotate(-45deg);
+		}
+	}
+	@else {
+		// Fade out the remaining items
+		.#{ map-get($classes, namespace) + map-get($classes, toggleButton) }.is-active &:nth-child( #{$i + 1} ) {
+			opacity: 0;
+			transform: translate(0);
+		}
+	}
+}
