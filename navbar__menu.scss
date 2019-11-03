@@ -1,0 +1,8 @@
+// Main navbar element
+@mixin navbar__menu($classes) {
+	.#{ map-get($classes, namespace) + map-get($classes, wrapper) } {
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+	}
+}

@@ -4,6 +4,8 @@
 		display: flex;
 		list-style: none;
 		flex-direction: row;
+		margin: 0;
+		padding: 0;
 	}
 
 	@if $startnav {
@@ -21,6 +23,7 @@
 	@if $endnav {
 		.#{ map-get($classes, namespace) + map-get($classes, end) } {
 			@extend %list;
+			margin-left: auto;
 		}
 	}
 }

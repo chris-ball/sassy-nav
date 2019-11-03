@@ -1,68 +1,70 @@
 @mixin toggle-icon-active-cross($toggleSettings, $classes) {
-
 	$orientation: map-get($toggleSettings, orientation);
 	$itemSize: map-get($toggleSettings, itemSize);
 
-	//----------------------------------------------------
 	// Loop over icon items
-	//----------------------------------------------------
 	@for $i from 0 to map-get($toggleSettings, itemCount) {
-
 		// Transform amount for default state
 		$itemTransform: transformWithin(
 			map-get($toggleSettings, itemCount),
 			getSize($itemSize, $orientation),
 			map-get($toggleSettings, itemGap),
-			$i);
+			$i
+		);
 
-		//----------------------------------------------------
 		// First toggle icon item
-		//----------------------------------------------------
 		@if $i == 0 {
 			// Default
 			&:nth-child(#{$i + 1}) {
-				transform: translateY($itemTransform);
+				transform: translateX(-50%) translateY($itemTransform);
 				transition: transform map-get($toggleSettings, activeTiming);
 			}
 			// Active
-			.#{ map-get($classes, namespace)
+			.#{
+				map-get($classes, namespace)
 				+ map-get($classes, toggleButton)
-				+ map-get($classes, toggleActive) } &:nth-child( #{$i + 1} ) {
-				transform: translate(0) rotate(45deg);
+				+ map-get($classes, toggleActive)
+				}
+				&:nth-child(#{$i + 1}) {
+				transform: translateX(-50%) translateY(0) rotate(45deg);
 			}
 		}
-		//----------------------------------------------------
+
 		// Last toggle icon item
-		//----------------------------------------------------
 		@else if $i == (map-get($toggleSettings, itemCount) - 1) {
 			// Default
 			&:nth-child(#{$i + 1}) {
-				transform: translateY($itemTransform);
+				transform: translateX(-50%) translateY($itemTransform);
 				transition: transform map-get($toggleSettings, activeTiming);
 			}
 			// Active
-			.#{ map-get($classes, namespace)
+			.#{
+				map-get($classes, namespace)
 				+ map-get($classes, toggleButton)
-				+ map-get($classes, toggleActive) } &:nth-child( #{$i + 1} ) {
-				transform: translate(0) rotate(-45deg);
+				+ map-get($classes, toggleActive)
+				}
+				&:nth-child(#{$i + 1}) {
+				transform: translateX(-50%) translateY(0) rotate(-45deg);
 			}
 		}
-		//----------------------------------------------------
+
 		// Remaining toggle icon items
-		//----------------------------------------------------
 		@else {
 			// Default
 			&:nth-child(#{$i + 1}) {
-				transform: translateY($itemTransform);
+				transform: translateX(-50%) translateY($itemTransform);
 				transition: opacity map-get($toggleSettings, activeTiming),
-							transform map-get($toggleSettings, activeTiming);
+					transform map-get($toggleSettings, activeTiming);
 			}
 			// Active
-			.#{ map-get($classes, namespace)
+			.#{
+				map-get($classes, namespace)
 				+ map-get($classes, toggleButton)
-				+ map-get($classes, toggleActive) } &:nth-child( #{$i + 1} ) {
+				+ map-get($classes, toggleActive)
+				}
+				&:nth-child(#{$i + 1}) {
 				opacity: 0;
-				transform: translate(0);
+				transform: translateX(-50%) translateY(0);
 			}
 		}
 	}

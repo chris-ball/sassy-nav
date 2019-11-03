@@ -1,0 +1,6 @@
+@mixin navbar__text($classes, $textSettings) {
+	.#{map-get($classes, namespace) + map-get($classes, text)} {
+		margin: setSizing(map-get($textSettings, margin));
+		padding: setSizing(map-get($textSettings, padding));
+	}
+}

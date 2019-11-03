@@ -1,6 +1,7 @@
-@mixin navbar__link($classes, $padding, $margin) {
-	.#{map-get($classes, namespace)+__link} {
-		padding: $padding;
-		margin: $margin;
+@mixin navbar__link($classes, $linkSettings) {
+	.#{map-get($classes, namespace) + map-get($classes, link)} {
+		display: inline-flex;
+		margin: setSizing(map-get($linkSettings, margin));
+		padding: setSizing(map-get($linkSettings, padding));
 	}
 }

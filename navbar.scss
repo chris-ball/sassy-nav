@@ -1,48 +1,61 @@
-@import "navbar_init";
+// General
+@import "utils";
+@import "navbar__defaults";
+// Toggle
+@import "navbar__toggle";
+@import "navbar__toggle-button";
+@import "navbar__toggle-icon";
+@import "navbar__toggle-icon--active-cross";
+@import "navbar__toggle-icon--active";
+// Sections
+@import "navbar__menu";
+@import "navbar__list";
+// Items
+@import "navbar__item";
+@import "navbar__link";
+@import "navbar__text";
 
-$settings: (
-	classes: (
-		namespace: "navbar",
-		brand: "__brand",
-		toggleButton: "__toggle-button",
-		toggleIcon: "__toggle-icon",
-		toggleActive: ".is-achtung",
-		start: "__start",
-		middle: "__middle",
-		end: "__end",
-		list: "__list",
-		link: "__link"
-	),
-	background: red,
-	color: white,
-	height: 40px,
-	linkpadding: 10px,
-	linkmargin: 10px,
-	itempadding: 10px,
-	itemmargin: 10px,
-	toggle: (
-		background: currentColor,
-		foreground: #000,
-		size: (
-			height: 40px,
-			width: 40px
-		),
-		round: 50%,
-		hide: 600px,
-		orientation: height,
-		itemCount: 4,
-		itemSize: (
-			height: 1px,
-			width: 20px
-		),
-		itemGap: 3px,
-		itemRound: 1px,
-		itemWidth: 20px,
-		activeType: cross,
-		activeTiming: 300ms
-	),
-	endnav: true,
-	startnav: true
-);
+@mixin navbar($settings: ()) {
+	// Override defaults with user settings
+	$settings: map-merge($defaults, $settings);
+	// Extract classes from map
+	$classes: map-get($settings, classes);
 
-@include navbar($settings);
+	// Main navbar element
+	.#{ map-get($classes, namespace) } {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		min-height: map-get($settings, height);
+		position: relative;
+	}
+
+	// Brand
+	@if map-get($settings, brand) {
+		.#{ map-get($classes, namespace) + map-get($classes, brand) } {
+		}
+	}
+
+	// Menu
+	@include navbar__menu($classes);
+
+	// Mobile toggle button
+	$toggle-settings: map-get($settings, toggle);
+	@if map-get($toggle-settings, include) {
+		@include navbar__toggle($classes, $toggle-settings, $settings);
+	}
+
+	// List containers for the groups of items
+	@include navbar__lists(
+		$classes,
+		map-get($settings, startnav),
+		map-get($settings, midnav),
+		map-get($settings, endnav)
+	);
+	// List items
+	@include navbar__item($classes, map-get($settings, item));
+	// Links
+	@include navbar__link($classes, map-get($settings, link));
+	// Text
+	@include navbar__text($classes, map-get($settings, text));
+}

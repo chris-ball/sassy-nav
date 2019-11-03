@@ -10,14 +10,22 @@
 	@return $offset;
 }
 
-@function transformWithin($count, $itemSize, $gapSize, $i){
+@function transformWithin($count, $itemSize, $gapSize, $i) {
 	$halfSize: ($itemSize + $gapSize) * ($count - 1) / 2;
 	@return $halfSize - ($i * ($itemSize + $gapSize));
 }
 
-@function getSize($size, $orientation){
+@function getSize($size, $orientation) {
 	@if type-of($size) == map {
 		@return map-get($size, $orientation);
+	} @else {
+		@return $size;
+	}
+}
+
+@function setSizing($size) {
+	@if type-of($size) == map {
+		@return map-get($size, height) map-get($size, width);
 	} @else {
 		@return $size;
 	}

@@ -1,6 +1,9 @@
-@mixin navbar__item($classes, $padding, $margin) {
-	.#{map-get($classes, namespace)+__item} {
-		padding: $padding;
-		margin: $margin;
+@mixin navbar__item($classes, $itemSettings) {
+	.#{map-get($classes, namespace) + map-get($classes, item)} {
+		display: inline-flex;
+		$margin: map-get($itemSettings, margin);
+		margin: map-get($margin, height) map-get($margin, width);
+		$padding: map-get($itemSettings, padding);
+		padding: map-get($padding, height) map-get($padding, width);
 	}
 }

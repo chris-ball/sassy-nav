@@ -1,0 +1,23 @@
+$toggle: (
+	include: true,
+	border: none,
+	background: currentColor,
+	foreground: #fff,
+	hide: 600px,
+	orientation: height,
+	round: 50%,
+	size: (
+		height: 40px,
+		width: 40px
+	),
+	itemCount: 4,
+	itemSize: (
+		height: 1px,
+		width: 20px
+	),
+	itemGap: 3px,
+	itemRound: 1px,
+	itemWidth: 20px,
+	activeType: cross,
+	activeTiming: 300ms
+);

@@ -1,0 +1,20 @@
+@import "/defaults/classes";
+@import "/defaults/links";
+@import "/defaults/items";
+@import "/defaults/text";
+@import "/defaults/toggle";
+
+$defaults: (
+	classes: $classes,
+	link: $links,
+	item: $items,
+	text: $text,
+	toggle: $toggle,
+	brand: (
+		height: 40px
+	),
+	color: white,
+	height: 3rem,
+	endnav: true,
+	startnav: true
+);

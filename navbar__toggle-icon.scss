@@ -1,66 +1,35 @@
-@mixin navbar__toggle-icon($classes, $toggleSettings, $settings) {
-
-	//----------------------------------------------------
-	//  Variables
-	//----------------------------------------------------
-	//  Global
-	$orientation:  map-get($toggleSettings, orientation);
-	//  Button element
-	$__buttonSize: map-get($toggleSettings, size);
-	$buttonSize: if(type-of($__buttonSize) == map, map-get($__buttonSize, $orientation), $__buttonSize);
-	//  Icon items
-	$__itemSize: map-get($toggleSettings, itemSize);
-	$iSize: map-get($toggleSettings, itemSize);
-	$itemSize: if(type-of($__itemSize) == map, map-get($__itemSize, $orientation), $__itemSize);
+@mixin navbar__toggle-icon($classes, $toggleSettings) {
+	// Global variables
+	$orientation: map-get($toggleSettings, orientation);
+	// Button element
+	$buttonSizeSettings: map-get($toggleSettings, size);
+	$buttonSize: if(
+		type-of($buttonSizeSettings) == map,
+		map-get($buttonSizeSettings, $orientation),
+		$buttonSizeSettings
+	);
+	// Icon items
+	$itemSize: map-get($toggleSettings, itemSize);
 	$itemColour: map-get($toggleSettings, foreground);
-	$sizeType: type-of($itemSize);
 
-	//----------------------------------------------------
-	//  Start building
-	//----------------------------------------------------
+	// Start building
 	.#{map-get($classes, namespace) + map-get($classes, toggleIcon)} {
 		background-color: if($itemColour, $itemColour, currentColor);
 		border-radius: map-get($toggleSettings, itemRound);
 		display: block;
-		height: getSize($iSize, height);
+		height: getSize($itemSize, height);
+		left: 50%;
 		position: absolute;
 		top: 50%;
+		transform: translateX(-50%);
 		transform-origin: center;
-		width: getSize($iSize, width);
-		//----------------------------------------------------
-		//  Transition settings
-		//----------------------------------------------------
-		@if map-get($toggleSettings, activeType) == 'single' {
+		width: getSize($itemSize, width);
+		// Transition settings
+		@if map-get($toggleSettings, activeType) == "single" {
 			transform-duration: map-get($toggleSettings, activeTiming);
 		}
-		@if map-get($toggleSettings, activeType) == 'cross' {
+		@if map-get($toggleSettings, activeType) == "cross" {
 			@include toggle-icon-active-cross($toggleSettings, $classes);
-		}
-	}
-}
-
-//----------------------------------------------------
-//  Toggle layer transforms for default state
-//----------------------------------------------------
-@mixin toggle-item-transforms-default($toggleSettings, $itemTransform, $i) {
-	// First item rotated 45 degrees
-	@if $i == 0 {
-		&:nth-child(#{$i + 1}) {
-			transform: translateY($itemTransform);
-			transition: transform map-get($toggleSettings, activeTiming);
-		}
-	}
-	// Last item rotated minus 45 degrees
-	// @else if $i == (map-get($toggleSettings, itemCount) - 1) {
-	// 	.#{$ns+__toggle}.is-active &:nth-child( #{$i + 1} ) {
-	// 		transform: translate(0) rotate(-45deg);
-	// 	}
-	// }
-	// Fade out the remaining items
-	@else {
-		&:nth-child(#{$i + 1}) {
-			transform: translateY($itemTransform);
-			transition: transform map-get($toggleSettings, activeTiming);
 		}
 	}
 }

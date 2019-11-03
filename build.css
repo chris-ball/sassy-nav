@@ -1,0 +1,84 @@
+.navbar {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  min-height: 3rem;
+  position: relative; }
+
+.navbar__menu {
+  display: flex;
+  flex: 1;
+  flex-direction: row; }
+
+.navbar__toggle {
+  background: currentColor;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: block;
+  height: 40px;
+  margin-left: auto;
+  padding: 0;
+  position: relative;
+  width: 40px; }
+  @media screen and (min-width: 600px) {
+    .navbar__toggle {
+      display: none; } }
+
+.navbar__toggle-icon {
+  background-color: #fff;
+  border-radius: 1px;
+  display: block;
+  height: 1px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%);
+  transform-origin: center;
+  width: 20px; }
+  .navbar__toggle-icon:nth-child(1) {
+    transform: translateX(-50%) translateY(6px);
+    transition: transform 300ms; }
+  .navbar__toggle.is-active .navbar__toggle-icon:nth-child(1) {
+    transform: translateX(-50%) translateY(0) rotate(45deg); }
+  .navbar__toggle-icon:nth-child(2) {
+    transform: translateX(-50%) translateY(2px);
+    transition: opacity 300ms, transform 300ms; }
+  .navbar__toggle.is-active .navbar__toggle-icon:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0); }
+  .navbar__toggle-icon:nth-child(3) {
+    transform: translateX(-50%) translateY(-2px);
+    transition: opacity 300ms, transform 300ms; }
+  .navbar__toggle.is-active .navbar__toggle-icon:nth-child(3) {
+    opacity: 0;
+    transform: translateX(-50%) translateY(0); }
+  .navbar__toggle-icon:nth-child(4) {
+    transform: translateX(-50%) translateY(-6px);
+    transition: transform 300ms; }
+  .navbar__toggle.is-active .navbar__toggle-icon:nth-child(4) {
+    transform: translateX(-50%) translateY(0) rotate(-45deg); }
+
+.navbar__start, .navbar__end {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  margin: 0;
+  padding: 0; }
+
+.navbar__end {
+  margin-left: auto; }
+
+.navbar__item {
+  display: inline-flex;
+  margin: 0 0.5em;
+  padding: 0 0; }
+
+.navbar__link {
+  display: inline-flex;
+  margin: 0;
+  padding: 0; }
+
+.navbar__text {
+  margin: 0;
+  padding: 0.5em; }
